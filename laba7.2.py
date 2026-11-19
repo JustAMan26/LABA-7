@@ -4,13 +4,13 @@ from random import uniform
 from math import sqrt
 
 def in_region(x, y):
-    """Проверка попадания точки в заштрихованную область"""
+    # Проверка попадания точки в заштрихованную область
     if (x >= abs(y)) and (y >= (x - 2)**2 - 3):
         return True
     return False
 
 def draw_contour():
-    """Рисование контура фигуры"""
+    # Рисование контура фигуры
     tr.color("black")
     tr.width(2)
     
@@ -39,7 +39,7 @@ def draw_contour():
         tr.goto(x, y)
 
 def draw_axes(x_min, x_max, y_min, y_max):
-    """Рисование осей координат"""
+    # Рисование осей координат
     tr.color("black")
     tr.width(1)
     
