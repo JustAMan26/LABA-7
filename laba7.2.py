@@ -9,6 +9,35 @@ def in_region(x, y):
         return True
     return False
 
+def draw_contour():
+    """Рисование контура фигуры"""
+    tr.color("black")
+    tr.width(2)
+    
+    # Линия x = |y| (две ветви: y = x и y = -x)
+    # Верхняя ветвь y = x от x=0 до x=5
+    tr.up()
+    tr.goto(0, 0)
+    tr.down()
+    tr.goto(5, 5)
+    
+    # Нижняя ветвь y = -x от x=0 до x=3
+    tr.up()
+    tr.goto(0, 0)
+    tr.down()
+    tr.goto(3, -3)
+    
+    # Парабола y = (x-2)^2 - 3
+    tr.up()
+    x = -1
+    y = (x - 2)**2 - 3
+    tr.goto(x, y)
+    tr.down()
+    while x <= 6:
+        x += 0.1
+        y = (x - 2)**2 - 3
+        tr.goto(x, y)
+
 def draw_axes(x_min, x_max, y_min, y_max):
     """Рисование осей координат"""
     tr.color("black")
@@ -89,7 +118,10 @@ def main():
     # Рисуем оси
     draw_axes(x_min, x_max, y_min, y_max)
     
-    # Генерация точек
+    # Рисуем контур фигуры
+    draw_contour()
+    
+    # Генерация точек - рисуем ТОЛЬКО попавшие в область
     tr.width(2)
     N_in = 0  # Число попавших точек
     
@@ -100,12 +132,9 @@ def main():
         if in_region(x, y):
             tr.up()
             tr.goto(x, y)
-            tr.dot(3, "green")
+            tr.dot(3, "green")  # Рисуем только попавшие точки
             N_in += 1
-        else:
-            tr.up()
-            tr.goto(x, y)
-            tr.dot(2, "red")
+        # Не попавшие точки НЕ рисуем
     
     # Площадь описывающего прямоугольника
     S_rect = (x_max - x_min) * (y_max - y_min)
